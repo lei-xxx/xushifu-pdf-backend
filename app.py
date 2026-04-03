@@ -1,6 +1,7 @@
 import os
 import uuid
 import subprocess
+import shutil
 from pathlib import Path
 
 from flask import Flask, request, send_file, jsonify
@@ -25,8 +26,10 @@ ALLOWED_QUALITIES = {
 def run_ghostscript(input_path: Path, output_path: Path, quality: str) -> None:
     preset = ALLOWED_QUALITIES.get(quality, "/ebook")
 
+    gs_path = shutil.which("gs") or "/opt/homebrew/bin/gs"
+
     cmd = [
-        "gs",
+        gs_path,
         "-sDEVICE=pdfwrite",
         "-dCompatibilityLevel=1.4",
         f"-dPDFSETTINGS={preset}",
