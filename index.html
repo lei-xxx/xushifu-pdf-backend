@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PDF 压缩工具（纯前端）</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <p class="eyebrow">纯前端 · 本地处理</p>
+        <h1>PDF 压缩工具</h1>
+        <p class="sub">
+          文件会上传到你的压缩服务端进行处理，使用 Ghostscript 强压缩，
+          完成后自动下载。
+        </p>
+      </header>
+
+      <section class="card">
+        <label class="file-input" id="dropZone">
+          <input id="fileInput" type="file" accept="application/pdf" />
+          <span id="fileLabel">点击选择或拖拽 PDF 文件到此处</span>
+        </label>
+
+        <div class="actions">
+          <button id="compressBtn" disabled>开始压缩</button>
+          <button id="resetBtn" class="ghost" disabled>重置</button>
+        </div>
+
+        <label class="quality">
+          压缩强度：
+          <select id="qualitySelect">
+            <option value="screen">极强（清晰度最低）</option>
+            <option value="ebook" selected>均衡（推荐）</option>
+            <option value="printer">较清晰</option>
+            <option value="prepress">高质量</option>
+          </select>
+        </label>
+
+        <div class="progress-wrap">
+          <div class="progress" id="progress"></div>
+        </div>
+
+        <p id="status" class="status">等待选择文件</p>
+        <p id="sizeInfo" class="size"></p>
+      </section>
+
+      <section class="tips">
+        <h2>说明</h2>
+        <ul>
+          <li>文件仅用于压缩处理，完成后会自动下载。</li>
+          <li>压缩强度越高，文件越小但清晰度会降低。</li>
+          <li>如果压缩后变大，可尝试降低强度或换其他模式。</li>
+        </ul>
+      </section>
+    </main>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
