@@ -8,7 +8,17 @@ const status = document.getElementById("status");
 const sizeInfo = document.getElementById("sizeInfo");
 const progress = document.getElementById("progress");
 
-const API_BASE_URL = "https://mayola-headiest-omega.ngrok-free.dev";
+const DEFAULT_API_BASE_URL = "https://mayola-headiest-omega.ngrok-free.dev";
+let apiBaseUrl = DEFAULT_API_BASE_URL;
+
+const configPromise = fetch(`./config.json?ts=${Date.now()}`)
+  .then((res) => (res.ok ? res.json() : null))
+  .then((data) => {
+    if (data && typeof data.apiBaseUrl === "string" && data.apiBaseUrl.trim()) {
+      apiBaseUrl = data.apiBaseUrl.trim();
+    }
+  })
+  .catch(() => {});
 
 let currentFile = null;
 
@@ -78,7 +88,8 @@ dropZone.addEventListener("drop", (event) => {
 
 compressBtn.addEventListener("click", async () => {
   if (!currentFile) return;
-  if (API_BASE_URL.includes("YOUR-RENDER-SERVICE")) {
+  await configPromise;
+  if (apiBaseUrl.includes("YOUR-RENDER-SERVICE")) {
     status.textContent = "请先配置服务端地址";
     compressBtn.disabled = false;
     return;
@@ -95,7 +106,7 @@ compressBtn.addEventListener("click", async () => {
 
     setProgress(40);
 
-    const response = await fetch(`${API_BASE_URL}/compress`, {
+    const response = await fetch(`${apiBaseUrl}/compress`, {
       method: "POST",
       body: formData,
     });
