@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent
 WORK_DIR = Path("/tmp")
 
 app = Flask(__name__)
-app.config["MAX_CONTENT_LENGTH"] = 80 * 1024 * 1024  # 80MB
+app.config["MAX_CONTENT_LENGTH"] = 400 * 1024 * 1024  # 400MB
 CORS(app)
 
 ALLOWED_QUALITIES = {
